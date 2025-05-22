@@ -2,8 +2,6 @@ name: Build Frontend
 
 on:
   push:
-    paths:
-      - "client/**"
     branches: [main]
 
 jobs:
@@ -20,7 +18,7 @@ jobs:
           node-version: 18
 
       - name: Install and build frontend (Vite)
-        working-directory: ./client
+        working-directory: ./
         run: |
           npm install
           npm run build
