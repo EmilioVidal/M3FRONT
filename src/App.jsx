@@ -17,8 +17,7 @@ function App() {
       try {
         setUsuario(JSON.parse(storedUser));
         setIsLoggedIn(true);
-      } catch (_error) {
-        // Si hay un error al parsear el usuario, limpiar localStorage
+      } catch {
         localStorage.removeItem('token');
         localStorage.removeItem('usuario');
       }

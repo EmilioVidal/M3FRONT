@@ -19,7 +19,7 @@ function UserManagement() {
       const response = await fetch(`${API_URL}/usuarios`);
       const data = await response.json();
       setUsers(data);
-    } catch (_error) {
+    } catch {
       setError('Error al cargar usuarios');
     }
   };
@@ -57,7 +57,7 @@ function UserManagement() {
         const data = await response.json();
         setError(data.error || 'Error al crear usuario');
       }
-    } catch (_error) {
+    } catch {
       setError('Error al crear usuario');
     }
   };
@@ -84,10 +84,8 @@ function UserManagement() {
         setError('');
       } else {
         setError(data.error || 'Error al actualizar usuario');
-        // Error response received
       }
-    } catch (_error) {
-      // Error occurred during update
+    } catch {
       setError('Error al actualizar usuario');
     }
   };
@@ -109,7 +107,7 @@ function UserManagement() {
           const data = await response.json();
           setError(data.error || 'Error al eliminar usuario');
         }
-      } catch (_error) {
+      } catch {
         setError('Error al eliminar usuario');
       }
     }
