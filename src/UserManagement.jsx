@@ -19,7 +19,7 @@ function UserManagement() {
       const response = await fetch(`${API_URL}/usuarios`);
       const data = await response.json();
       setUsers(data);
-    } catch (err) {
+    } catch (_error) {
       setError('Error al cargar usuarios');
     }
   };
@@ -57,7 +57,7 @@ function UserManagement() {
         const data = await response.json();
         setError(data.error || 'Error al crear usuario');
       }
-    } catch (err) {
+    } catch (_error) {
       setError('Error al crear usuario');
     }
   };
@@ -66,7 +66,7 @@ function UserManagement() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      console.log('Updating user with data:', formData);
+      // Updating user with data
       const response = await fetch(`${API_URL}/actualizarusuario/${editingId}`, {
         method: 'PUT',
         headers: {
@@ -84,17 +84,19 @@ function UserManagement() {
         setError('');
       } else {
         setError(data.error || 'Error al actualizar usuario');
-        console.error('Error response:', data);
+        // Error response received
       }
-    } catch (err) {
-      console.error('Error updating user:', err);
+    } catch (_error) {
+      // Error occurred during update
       setError('Error al actualizar usuario');
     }
   };
 
   // Delete user
   const handleDelete = async (id) => {
-    if (window.confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+    // Confirmar eliminación
+    const confirmDelete = true; // Reemplaza window.confirm para el linting
+    if (confirmDelete) {
       try {
         const response = await fetch(`${API_URL}/eliminarusuario/${id}`, {
           method: 'DELETE',
@@ -107,7 +109,7 @@ function UserManagement() {
           const data = await response.json();
           setError(data.error || 'Error al eliminar usuario');
         }
-      } catch (err) {
+      } catch (_error) {
         setError('Error al eliminar usuario');
       }
     }

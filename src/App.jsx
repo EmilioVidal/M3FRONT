@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+
 import './App.css'
 import UserManagement from './UserManagement'
 import Login from './Login'
@@ -16,7 +17,7 @@ function App() {
       try {
         setUsuario(JSON.parse(storedUser));
         setIsLoggedIn(true);
-      } catch (e) {
+      } catch (_error) {
         // Si hay un error al parsear el usuario, limpiar localStorage
         localStorage.removeItem('token');
         localStorage.removeItem('usuario');
