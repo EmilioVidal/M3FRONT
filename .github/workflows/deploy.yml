@@ -1,28 +1,43 @@
-name: Deploy Frontend
+name: Deploy
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    name: Build and Deploy Frontend to Azure Static Web App
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Build the React app
-        run: |
-          npm install
-          npm run build
-
-      - name: Deploy to Azure Static Web Apps
-        uses: azure/static-web-apps-deploy@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: "upload"
-          app_location: "/"
-          output_location: "dist"
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # Despliegue a GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist     # La carpeta generada por Vite
+          branch: gh-pages # La rama donde se publicará
+          clean: true      # Eliminar archivos antiguos
+
+      # Si usas otro servicio de hosting, puedes reemplazar esta sección
+      # Ejemplo para Azure Static Web Apps:
+      # - name: Deploy to Azure Static Web Apps
+      #   uses: Azure/static-web-apps-deploy@v1
+      #   with:
+      #     azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     action: "upload"
+      #     app_location: "/"
+      #     output_location: "dist"
