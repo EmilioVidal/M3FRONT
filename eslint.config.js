@@ -89,4 +89,24 @@ export default [
       ],
     },
   },
+  // Configuración específica para archivos de prueba
+  {
+    files: ['**/__tests__/**/*.{js,jsx}', '**/*.test.{js,jsx}', '**/setupTests.js'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.es2020,
+        ...globals.jest,
+        ...globals.node,
+        React: 'readonly',
+        global: 'writable',
+      },
+    },
+    rules: {
+      // Desactivar algunas reglas para archivos de prueba
+      'react/prop-types': 'off',
+      'no-console': 'off',
+      'import/no-unresolved': 'off', // Los mocks pueden no resolverse
+    },
+  },
 ]
